@@ -15,10 +15,12 @@ import java.util.concurrent.CountDownLatch;
 public class CrasherActivity extends AppCompatActivity {
 
     private int threadCount = 0;
+    private Crasher crasher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        crasher = new Crasher();
         Fabric.with(new Fabric.Builder(this)
                             .kits(new Crashlytics(), new CrashlyticsNdk())
                             .debuggable(true)
@@ -55,7 +57,7 @@ public class CrasherActivity extends AppCompatActivity {
 
     public void forceCrashOnMainThread(View view) {
         disableButtons();
-        new Crasher().crash();
+        crasher.crash();
     }
 
     public void forceCrashOnBackgroundThread(View view) {
@@ -63,14 +65,14 @@ public class CrasherActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new Crasher().crash();
+                crasher.crash();
             }
         }).start();
     }
 
     public void forceNativeCrashOnMainThread(View view) {
         disableButtons();
-        new Crasher().nativeCrash();
+        crasher.nativeCrash();
     }
 
     public void forceNativeCrashOnBackgroundThread(View view) {
@@ -78,7 +80,7 @@ public class CrasherActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new Crasher().nativeCrash();
+                crasher.nativeCrash();
             }
         }).start();
     }

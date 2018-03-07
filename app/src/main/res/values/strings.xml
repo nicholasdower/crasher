@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Crasher</string>
     <string name="title_crash_activity">Crasher</string>
-    <string name="force_crash">Force Crash!</string>
-    <string name="force_native_crash">Force Native Crash!</string>
+    <string name="start_threads">Start 10 Background Threads</string>
+    <string name="force_crash_on_background_thread">Force Crash On Background Thread</string>
+    <string name="force_native_crash_on_background_thread">Force Native Crash On Background Thread</string>
+    <string name="force_crash_on_main_thread">Force Crash On Main Thread</string>
+    <string name="force_native_crash_on_main_thread">Force Native Crash On Main Thread</string>
+    <string name="thread_count">Background Threads: %1$d</string>
 </resources>

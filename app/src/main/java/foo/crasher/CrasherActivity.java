@@ -8,8 +8,13 @@ import io.fabric.sdk.android.InitializationCallback;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.concurrent.CountDownLatch;
 
 public class CrasherActivity extends AppCompatActivity {
+
+    private int threadCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,7 @@ public class CrasherActivity extends AppCompatActivity {
                                 @Override
                                 public void success(Fabric fabric) {
                                     setContentView(R.layout.crasher);
+                                    setThreadCount();
                                 }
 
                                 @Override
@@ -30,12 +36,63 @@ public class CrasherActivity extends AppCompatActivity {
                             .build());
     }
 
-    public void forceCrash(View view) {
+    public void startThreads(View view) {
+        for (int i = 0; i < 10; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        new CountDownLatch(1).await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+        threadCount += 10;
+        setThreadCount();
+    }
+
+    public void forceCrashOnMainThread(View view) {
+        disableButtons();
         new Crasher().crash();
     }
 
-    public void forceNativeCrash(View view) {
+    public void forceCrashOnBackgroundThread(View view) {
+        disableButtons();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new Crasher().crash();
+            }
+        }).start();
+    }
+
+    public void forceNativeCrashOnMainThread(View view) {
+        disableButtons();
         new Crasher().nativeCrash();
     }
 
+    public void forceNativeCrashOnBackgroundThread(View view) {
+        disableButtons();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new Crasher().nativeCrash();
+            }
+        }).start();
+    }
+
+    private void setThreadCount() {
+        TextView threadCountTextView = findViewById(R.id.thread_count);
+        threadCountTextView.setText(getString(R.string.thread_count, threadCount));
+    }
+
+    private void disableButtons() {
+        findViewById(R.id.start_threads).setEnabled(false);
+        findViewById(R.id.force_crash_on_background_thread).setEnabled(false);
+        findViewById(R.id.force_crash_on_main_thread).setEnabled(false);
+        findViewById(R.id.force_native_crash_on_background_thread).setEnabled(false);
+        findViewById(R.id.force_native_crash_on_main_thread).setEnabled(false);
+    }
 }

@@ -1,27 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="crasher.CrasherActivity">
+    android:orientation="vertical"
+    android:gravity="center|top"
+    tools:context="foo.crasher.CrasherActivity">
+
+    <TextView
+        android:id="@+id/thread_count"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp" />
 
     <Button
-        android:id="@+id/force_crash"
+        android:id="@+id/start_threads"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/force_crash"
-        android:onClick="forceCrash"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="30dp"
+        android:text="@string/start_threads"
+        android:onClick="startThreads" />
 
     <Button
+        android:id="@+id/force_crash_on_main_thread"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/force_native_crash"
-        android:onClick="forceNativeCrash"
-        android:layout_below="@id/force_crash"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:text="@string/force_crash_on_main_thread"
+        android:onClick="forceCrashOnMainThread"/>
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/force_crash_on_background_thread"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/force_crash_on_background_thread"
+        android:onClick="forceCrashOnBackgroundThread" />
+
+    <Button
+        android:id="@+id/force_native_crash_on_main_thread"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/force_native_crash_on_main_thread"
+        android:onClick="forceNativeCrashOnMainThread" />
+
+    <Button
+        android:id="@+id/force_native_crash_on_background_thread"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/force_native_crash_on_background_thread"
+        android:onClick="forceNativeCrashOnBackgroundThread" />
+
+</LinearLayout>

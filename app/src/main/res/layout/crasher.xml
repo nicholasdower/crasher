@@ -52,4 +52,12 @@
         android:text="@string/force_native_crash_on_background_thread"
         android:onClick="forceNativeCrashOnBackgroundThread" />
 
+    <TextView
+        android:id="@+id/stopwatch"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="44sp"
+        android:text="@string/zero"/>
+
 </LinearLayout>

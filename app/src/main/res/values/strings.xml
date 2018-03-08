@@ -6,5 +6,6 @@
     <string name="force_native_crash_on_background_thread">Force Native Crash On Background Thread</string>
     <string name="force_crash_on_main_thread">Force Crash On Main Thread</string>
     <string name="force_native_crash_on_main_thread">Force Native Crash On Main Thread</string>
-    <string name="thread_count">Background Threads: %1$d</string>
+    <string name="thread_count">Total Threads: %1$d</string>
+    <string name="zero">00:00</string>
 </resources>

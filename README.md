@@ -13,6 +13,7 @@ A sample app used to test Fabric integration. Includes a simple UI used to trigg
 
 1. Install the app on a device.
 1. Open the app.
+1. Tap the enable Crashlytics button.
 1. Tap one of the crash buttons.
 1. Optionally, start some background threads to see the impact on time it takes to crash.
 1. If you triggered a native crash, reopen the app so that the report willl be uploaded.
@@ -24,4 +25,4 @@ A sample app used to test Fabric integration. Includes a simple UI used to trigg
 
 Triggering a native crash from the main thread will cause the app to crash immediately. Triggering one from a background thread will cause the app to hang for several seconds before crashing. This time increases with the total number of background threads. For instance, with 60 threads, the app might take up to 50 seconds to crash.
 
-You can repro this in the sample app by starting 50 to 100 background threads then tapping "FORCE NATIVE CRASH ON BACKGROUND THREAD". The stopwatch will run until the app crashes.
+You can repro this in the sample app by enabling Crashlytics, starting 50 to 100 background threads then tapping "FORCE NATIVE CRASH ON BACKGROUND THREAD". The stopwatch will run until the app crashes.

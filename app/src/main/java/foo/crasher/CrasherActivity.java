@@ -24,18 +24,28 @@ public class CrasherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         crasher = new Crasher();
         handler = new Handler();
+        setContentView(R.layout.crasher);
+        startThreadCounter();
+    }
+
+    public void enableCrashlytics(View view) {
+        setButtonsEnabled(false);
+        final TextView crashlyticsState = findViewById(R.id.crashlytics_state);
+        crashlyticsState.setText(getString(R.string.crashlytics_initializing));
         Fabric.with(new Fabric.Builder(this)
                             .kits(new Crashlytics(), new CrashlyticsNdk())
                             .debuggable(true)
                             .initializationCallback(new InitializationCallback<Fabric>() {
                                 @Override
                                 public void success(Fabric fabric) {
-                                    setContentView(R.layout.crasher);
-                                    startThreadCounter();
+                                    findViewById(R.id.enable_crashlytics).setVisibility(View.GONE);
+                                    setButtonsEnabled(true);
+                                    crashlyticsState.setText(getString(R.string.crashlytics_enabled));
                                 }
 
                                 @Override
                                 public void failure(Exception e) {
+                                    throw new RuntimeException("Failed to initialize Crashlytics", e);
                                 }
                             })
                             .build());
@@ -58,7 +68,12 @@ public class CrasherActivity extends AppCompatActivity {
 
     public void forceCrashOnMainThread(View view) {
         disableButtonsAndStartStopwatch();
-        crasher.crash();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+               crasher.crash();
+            }
+        });
     }
 
     public void forceCrashOnBackgroundThread(View view) {
@@ -73,7 +88,12 @@ public class CrasherActivity extends AppCompatActivity {
 
     public void forceNativeCrashOnMainThread(View view) {
         disableButtonsAndStartStopwatch();
-        crasher.nativeCrash();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                crasher.nativeCrash();
+            }
+        });
     }
 
     public void forceNativeCrashOnBackgroundThread(View view) {
@@ -87,11 +107,7 @@ public class CrasherActivity extends AppCompatActivity {
     }
 
     private void disableButtonsAndStartStopwatch() {
-        findViewById(R.id.start_threads).setEnabled(false);
-        findViewById(R.id.force_crash_on_background_thread).setEnabled(false);
-        findViewById(R.id.force_crash_on_main_thread).setEnabled(false);
-        findViewById(R.id.force_native_crash_on_background_thread).setEnabled(false);
-        findViewById(R.id.force_native_crash_on_main_thread).setEnabled(false);
+        setButtonsEnabled(false);
 
         final TextView timerView = findViewById(R.id.stopwatch);
         final long start = System.nanoTime() / 1000000000;
@@ -104,6 +120,16 @@ public class CrasherActivity extends AppCompatActivity {
             }
         };
         handler.post(runnable);
+    }
+
+    private void setButtonsEnabled(boolean enabled) {
+        findViewById(R.id.enable_crashlytics).setEnabled(enabled);
+        findViewById(R.id.start_threads).setEnabled(enabled);
+        findViewById(R.id.force_crash_on_background_thread).setEnabled(enabled);
+        findViewById(R.id.force_crash_on_main_thread).setEnabled(enabled);
+        findViewById(R.id.force_native_crash_on_background_thread).setEnabled(enabled);
+        findViewById(R.id.force_native_crash_on_main_thread).setEnabled(enabled);
+        findViewById(R.id.force_native_crash_on_main_thread).setEnabled(enabled);
     }
 
     private void startThreadCounter() {

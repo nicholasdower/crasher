@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Crasher</string>
     <string name="title_crash_activity">Crasher</string>
+    <string name="crashlytics_enabled">Crashlytics enabled</string>
+    <string name="crashlytics_disabled">Crashlytics disabled</string>
+    <string name="crashlytics_initializing">Crashlytics initializing</string>
     <string name="start_threads">Start 10 Background Threads</string>
     <string name="force_crash_on_background_thread">Force Crash On Background Thread</string>
+    <string name="enable_crashlytics">Enable Crashlytics</string>
     <string name="force_native_crash_on_background_thread">Force Native Crash On Background Thread</string>
     <string name="force_crash_on_main_thread">Force Crash On Main Thread</string>
     <string name="force_native_crash_on_main_thread">Force Native Crash On Main Thread</string>

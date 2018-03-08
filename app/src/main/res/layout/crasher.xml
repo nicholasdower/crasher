@@ -9,11 +9,19 @@
     tools:context="foo.crasher.CrasherActivity">
 
     <TextView
-        android:id="@+id/thread_count"
-        android:layout_marginBottom="20dp"
+        android:id="@+id/crashlytics_state"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/crashlytics_disabled"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/thread_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        tools:text="Total Threads: 5"
         android:textSize="22sp" />
 
     <Button
@@ -55,9 +63,17 @@
     <TextView
         android:id="@+id/stopwatch"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="44sp"
         android:text="@string/zero"/>
+
+    <Button
+        android:id="@+id/enable_crashlytics"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/enable_crashlytics"
+        android:onClick="enableCrashlytics" />
 
 </LinearLayout>
